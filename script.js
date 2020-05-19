@@ -101,7 +101,39 @@ var addMessage = function (message) {
     reRenderPage();
 };
 var reRenderPage = function () {
+    var rowContainer = document.getElementById("emailpanel");
+    rowContainer.innerHTML = "";
+    emails.forEach(function (email) {
+        var cardContainer = document.createElement("div");
+        cardContainer.classList.add("card");
+        cardContainer.style.minWidth = "18rem";
+        cardContainer.style.marginBottom = "10px";
+        var cardBody = document.createElement("div");
+        cardBody.classList.add("card-body");
+        var cardTitle = document.createElement("div");
+        cardTitle.classList.add("card-title");
+        cardTitle.style.color = "dodgerblue";
+        cardTitle.innerHTML = email.From;
+        var cardSubject = document.createElement("div");
+        cardSubject.classList.add("card-text");
+        cardSubject.innerHTML = email.Subject;
+        var timeStamp = document.createElement("div");
+        timeStamp.innerHTML = email.Date;
+        timeStamp.classList.add("text-muted");
+        cardBody.appendChild(cardTitle);
+        cardBody.appendChild(cardSubject);
+        cardBody.appendChild(timeStamp);
+        cardContainer.appendChild(cardBody);
+        rowContainer.appendChild(cardContainer);
+    });
 };
+/* <div class="card">
+<div class="card-body">
+<div class="card-title">ABC</div>
+<div class="card-text">Some Subject</div>
+<div class="text-muted">Some Time</div>
+</div>
+</div> */
 var getHeader = function (allHeaders, key) {
     var header = "";
     allHeaders.forEach(function (element) {

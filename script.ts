@@ -72,8 +72,41 @@ const addMessage = (message) =>{
 }
 
 const reRenderPage = () =>{
-
+    let rowContainer = <HTMLDivElement>document.getElementById("emailpanel");
+    rowContainer.innerHTML = "";
+    emails.forEach(email => {
+        let cardContainer = <HTMLDivElement>document.createElement("div");
+        cardContainer.classList.add("card");
+        cardContainer.style.minWidth = "18rem"
+        cardContainer.style.marginBottom = "10px"
+        let cardBody = <HTMLDivElement>document.createElement("div");
+        cardBody.classList.add("card-body");
+        let cardTitle = <HTMLDivElement>document.createElement("div");
+        cardTitle.classList.add("card-title");
+        cardTitle.style.color = "dodgerblue"
+        cardTitle.innerHTML = email.From;
+        let cardSubject = <HTMLDivElement>document.createElement("div");
+        cardSubject.classList.add("card-text");
+        cardSubject.innerHTML = email.Subject;
+        let timeStamp = <HTMLDivElement>document.createElement("div");
+        timeStamp.innerHTML = email.Date;
+        timeStamp.classList.add("text-muted");
+        cardBody.appendChild(cardTitle);
+        cardBody.appendChild(cardSubject);
+        cardBody.appendChild(timeStamp);
+        cardContainer.appendChild(cardBody);
+        rowContainer.appendChild(cardContainer);
+    });
+    
 }
+
+/* <div class="card">
+<div class="card-body">
+<div class="card-title">ABC</div>
+<div class="card-text">Some Subject</div>
+<div class="text-muted">Some Time</div>
+</div>
+</div> */
 
 const getHeader = (allHeaders, key) => {
     let header = "";
@@ -112,13 +145,13 @@ const getHTML = (data) =>{
 
 const sendEmail = () => {
     //Disable the button;
-
+    
 }
 
 const sendMessage = (headers,message,callback) =>{
     let mail = '';
     for(let head in headers)
-        mail += head += ": "+headers[head]+"\r\n";
+    mail += head += ": "+headers[head]+"\r\n";
     mail += "\r\n"+ message
     let sendReq = gapi.client.gmail.users.messages.send({'userid':'me','resource':{'raw':window.btoa(mail).replace(/\+/g, '-').replace(/\//g, '_')}})
     return sendReq.execute(callback);

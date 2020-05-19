@@ -24,3 +24,6 @@ body{
 .fill-width{
     width: 100%;
 }
+.card{
+    margin-bottom: 10px;
+}
