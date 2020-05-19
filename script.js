@@ -144,9 +144,12 @@ var findIndex = function (query) {
 };
 var changeContent = function (id) {
     var viewer = document.getElementById("viewer");
+    viewer.innerHTML = "";
+    var frame = document.createElement("iframe");
     var index = findIndex(id);
     console.log(emails[index]);
-    viewer.innerHTML = emails[index].body;
+    frame.srcdoc = emails[index].body;
+    viewer.appendChild(frame);
 };
 /* <div class="card">
 <div class="card-body">

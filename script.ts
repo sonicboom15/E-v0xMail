@@ -119,9 +119,12 @@ const findIndex = (query) =>{
 
 const changeContent = (id) =>{
     let viewer = <HTMLDivElement>document.getElementById("viewer");
+    viewer.innerHTML = "";
+    let frame = <HTMLIFrameElement>document.createElement("iframe");
     let index = findIndex(id);
     console.log(emails[index]);
-    viewer.innerHTML = emails[index].body
+    frame.srcdoc = emails[index].body
+    viewer.appendChild(frame)
 }
 
 /* <div class="card">
