@@ -101,10 +101,56 @@ var addMessage = function (message) {
     tmpEmail.replySubject = "Re: " + getHeader(message.payload.headers, 'Subject').replace(/\"/g, '&quot;');
     tmpEmail.MessageID = getHeader(message.payload.headers, 'Message-ID');
     tmpEmail.labels = message.labelIds;
-    var keys = tmpEmail.Subject.split(" ");
+    var keys = tmpEmail.Subject.toLowerCase().split(" ");
     tmpEmail.keys = new Set(keys);
     emails.push(tmpEmail);
     reRenderPage();
+};
+var getFiltered = function (query) {
+    query = query.toLowerCase();
+    var results = [];
+    for (var i = 0; i < emails.length; i++) {
+        if (emails[i].keys.has(query)) {
+            results.push(emails[i]);
+        }
+    }
+    return results;
+};
+var getResults = function (element) {
+    var query = element.value;
+    if (query == "") {
+        reRenderPage();
+    }
+    else {
+        var rowContainer_1 = document.getElementById("emailpanel");
+        rowContainer_1.innerHTML = "";
+        var data = getFiltered(query);
+        console.log(data);
+        data.forEach(function (email) {
+            var cardContainer = document.createElement("div");
+            cardContainer.classList.add("card");
+            cardContainer.style.minWidth = "18rem";
+            cardContainer.style.marginBottom = "10px";
+            var cardBody = document.createElement("div");
+            cardBody.classList.add("card-body");
+            var cardTitle = document.createElement("div");
+            cardTitle.classList.add("card-title");
+            cardTitle.style.color = "dodgerblue";
+            cardTitle.innerHTML = email.From;
+            var cardSubject = document.createElement("div");
+            cardSubject.classList.add("card-text");
+            cardSubject.innerHTML = email.Subject;
+            var timeStamp = document.createElement("div");
+            timeStamp.innerHTML = email.Date;
+            timeStamp.classList.add("text-muted");
+            cardBody.appendChild(cardTitle);
+            cardBody.appendChild(cardSubject);
+            cardBody.appendChild(timeStamp);
+            cardContainer.appendChild(cardBody);
+            cardContainer.onclick = function () { changeContent(email.id); };
+            rowContainer_1.appendChild(cardContainer);
+        });
+    }
 };
 var reRenderPage = function () {
     var rowContainer = document.getElementById("emailpanel");

@@ -72,11 +72,60 @@ const addMessage = (message) =>{
     tmpEmail.replySubject = `Re: ${getHeader(message.payload.headers,'Subject').replace(/\"/g, '&quot;')}`;
     tmpEmail.MessageID = getHeader(message.payload.headers, 'Message-ID')
     tmpEmail.labels = message.labelIds;
-    let keys = tmpEmail.Subject.split(" ");
+    let keys = tmpEmail.Subject.toLowerCase().split(" ");
     tmpEmail.keys = new Set(keys);
     emails.push(tmpEmail);
     reRenderPage();
 }
+
+const getFiltered = (query) =>{
+    query = query.toLowerCase();
+    let results = []
+    for(let i=0;i<emails.length;i++){
+        if(emails[i].keys.has(query)){
+            results.push(emails[i]);
+        }
+    }
+    return results;
+}
+
+const getResults = (element) =>{
+    let query = element.value;
+    if(query == ""){
+        reRenderPage();
+    }else{
+        let rowContainer = <HTMLDivElement>document.getElementById("emailpanel");
+        rowContainer.innerHTML = "";
+        let data = getFiltered(query);
+        console.log(data);
+        data.forEach(email => {
+        let cardContainer = <HTMLDivElement>document.createElement("div");
+        cardContainer.classList.add("card");
+        cardContainer.style.minWidth = "18rem"
+        cardContainer.style.marginBottom = "10px"
+        let cardBody = <HTMLDivElement>document.createElement("div");
+        cardBody.classList.add("card-body");
+        let cardTitle = <HTMLDivElement>document.createElement("div");
+        cardTitle.classList.add("card-title");
+        cardTitle.style.color = "dodgerblue"
+        cardTitle.innerHTML = email.From;
+        let cardSubject = <HTMLDivElement>document.createElement("div");
+        cardSubject.classList.add("card-text");
+        cardSubject.innerHTML = email.Subject;
+        let timeStamp = <HTMLDivElement>document.createElement("div");
+        timeStamp.innerHTML = email.Date;
+        timeStamp.classList.add("text-muted");
+        cardBody.appendChild(cardTitle);
+        cardBody.appendChild(cardSubject);
+        cardBody.appendChild(timeStamp);
+        cardContainer.appendChild(cardBody);
+        cardContainer.onclick = ()=>{changeContent(email.id);}
+        rowContainer.appendChild(cardContainer);
+    });
+
+    }
+}
+
 
 const reRenderPage = () =>{
     let rowContainer = <HTMLDivElement>document.getElementById("emailpanel");

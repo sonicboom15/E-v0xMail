@@ -42,3 +42,13 @@ iframe{
     width: 100%;
     border: none;
 }
+.brand{
+    color: white;
+    font-size: xx-large;
+}
+.btn-menu{
+    color: white;
+    text-align: center;
+    background-color: #1f2d44;
+    width: 100%;
+}
