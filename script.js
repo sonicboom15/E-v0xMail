@@ -35,8 +35,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var _this = this;
-var clientId = '435424937057-ckq50rf8b5dki9o7dim9bgqjf3i5miq4.apps.googleusercontent.com';
-var apiKey = 'AIzaSyCkX1JZd7rnzazV0KhOoYz8FKQC1mRn6FM';
+var clientId = '936953089183-uhqoc3o2ppvq9c7k3qt502a0qncngblh.apps.googleusercontent.com';
+var apiKey = 'AIzaSyBCelgT8UegrlTPaSHAX3EpvRhHCD7Zz94';
 var scopes = 'https://www.googleapis.com/auth/gmail.readonly ' + 'https://www.googleapis.com/auth/gmail.send';
 var emails = [];
 var gapi;

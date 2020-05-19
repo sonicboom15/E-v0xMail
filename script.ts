@@ -1,5 +1,5 @@
-let clientId = '435424937057-ckq50rf8b5dki9o7dim9bgqjf3i5miq4.apps.googleusercontent.com';
-let apiKey = 'AIzaSyCkX1JZd7rnzazV0KhOoYz8FKQC1mRn6FM';
+let clientId = '936953089183-uhqoc3o2ppvq9c7k3qt502a0qncngblh.apps.googleusercontent.com';
+let apiKey = 'AIzaSyBCelgT8UegrlTPaSHAX3EpvRhHCD7Zz94';
 let scopes = 'https://www.googleapis.com/auth/gmail.readonly '+'https://www.googleapis.com/auth/gmail.send';
 
 let emails = [];
