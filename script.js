@@ -218,6 +218,12 @@ var changeContent = function (id) {
     frame.srcdoc = emails[index].body;
     viewer.appendChild(frame);
 };
+var getForm = function () {
+    var viewer = document.getElementById("viewer");
+    viewer.innerHTML = "";
+    var formdata = '<form>\r\n                    <div class=\"form-group\">\r\n                      <input type=\"email\" class=\"form-control\" id=\"toAddress\" placeholder=\"To\" required>\r\n                    <\/div>\r\n                    <div class=\"form-group\">\r\n                      <input type=\"text\" class=\"form-control\" id=\"subject\" placeholder=\"Subject\">\r\n                    <\/div>\r\n                    <div class=\"form-group\">\r\n                        <textarea name=\"body\" class=\"form-control\" id=\"emailbody\" style=\"min-width: 100%;min-height: 70vh;\" placeholder=\"Enter Content\" required><\/textarea>\r\n                    <\/div>\r\n                    <button type=\"submit\" class=\"btn btn-primary\">Send<\/button>\r\n                  <\/form>';
+    viewer.innerHTML = formdata;
+};
 /* <div class="card">
 <div class="card-body">
 <div class="card-title">ABC</div>
@@ -258,8 +264,19 @@ var getHTML = function (data) {
     }
     return "";
 };
+var showOutput = function () {
+    var viewer = document.getElementById("viewer");
+    viewer.innerHTML = "<div class=\"alert alert-success\" role=\"alert\">\r\n  Mail Sent\r\n<\/div>";
+};
 var sendEmail = function () {
     //Disable the button;
+    var send = document.getElementById("sendbutton");
+    var body = document.getElementById("emailbody");
+    var Subject = document.getElementById("subject");
+    var To = document.getElementById("toAddress");
+    send.disabled = true;
+    sendMessage({ To: To, Subject: Subject }, body, showOutput);
+    return false;
 };
 var sendMessage = function (headers, message, callback) {
     var mail = '';

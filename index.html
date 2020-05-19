@@ -29,21 +29,33 @@
             </div>
             <div class="col-md-3 email-panel">
                 <div class="row" style="padding-top: 10px;">
-                    <div class="col-md-9">
+                    <div class="col-md-8">
                         <form>
                         <input type="text" class="form-control search-bar" placeholder="Search" onchange="getResults(this)">
                         </form>
                     </div>
-                    <div class="col-md-3">
-                        <button class="btn btn-transparent fill-width" onclick="handleAuthClick()">New</button>
+                    <div class="col-md-4">
+                        <button class="btn btn-transparent fill-width" onclick="getForm()"><i class="fa fa-envelope" aria-hidden="true"> New</i></button>
                     </div>
                 </div>
                 <hr>
                 <div class="card-deck" id="emailpanel">
-                    
+
                 </div>
             </div>
-            <div class="col-md-7 message-panel" id="viewer">
+            <div class="col-md-7 message-panel" id="viewer" style="padding: 10px;">
+                <form onsubmit="return sendEmail()">
+                    <div class="form-group">
+                      <input type="email" class="form-control" id="toAddress" placeholder="To" required>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="subject" placeholder="Subject">
+                    </div>
+                    <div class="form-group">
+                        <textarea name="body" class="form-control" id="emailbody" style="min-width: 100%;min-height: 70vh;" placeholder="Enter Content" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="sendbutton">Send</button>
+                  </form>
             </div>
         </div>
     </div>

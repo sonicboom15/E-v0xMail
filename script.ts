@@ -191,6 +191,13 @@ const changeContent = (id) =>{
     viewer.appendChild(frame)
 }
 
+const getForm = () =>{
+    let viewer = <HTMLDivElement>document.getElementById("viewer");
+    viewer.innerHTML = "";
+    let formdata = '<form>\r\n                    <div class=\"form-group\">\r\n                      <input type=\"email\" class=\"form-control\" id=\"toAddress\" placeholder=\"To\" required>\r\n                    <\/div>\r\n                    <div class=\"form-group\">\r\n                      <input type=\"text\" class=\"form-control\" id=\"subject\" placeholder=\"Subject\">\r\n                    <\/div>\r\n                    <div class=\"form-group\">\r\n                        <textarea name=\"body\" class=\"form-control\" id=\"emailbody\" style=\"min-width: 100%;min-height: 70vh;\" placeholder=\"Enter Content\" required><\/textarea>\r\n                    <\/div>\r\n                    <button type=\"submit\" class=\"btn btn-primary\">Send<\/button>\r\n                  <\/form>'
+    viewer.innerHTML = formdata;
+}
+
 /* <div class="card">
 <div class="card-body">
 <div class="card-title">ABC</div>
@@ -234,9 +241,21 @@ const getHTML = (data) =>{
     return "";
 }
 
+const showOutput = () => {
+    let viewer = <HTMLDivElement>document.getElementById("viewer");
+    viewer.innerHTML = "<div class=\"alert alert-success\" role=\"alert\">\r\n  Mail Sent\r\n<\/div>"
+}
+
 const sendEmail = () => {
     //Disable the button;
-    
+    console.log("Yay");
+    let send = <HTMLButtonElement>document.getElementById("sendbutton");
+    let body = <HTMLTextAreaElement>document.getElementById("emailbody");
+    let Subject = <HTMLInputElement>document.getElementById("subject");
+    let To = <HTMLInputElement>document.getElementById("toAddress");
+    send.disabled = true;
+    sendMessage({To,Subject},body,showOutput);
+    return false;
 }
 
 const sendMessage = (headers,message,callback) =>{
