@@ -33,8 +33,8 @@ const handleAuthClick = () => {
 
 const handleAuthResult = (authResult) =>{
     if(authResult && !authResult.error){
-        loadGmailApi();
         removeSignInScreen();
+        loadGmailApi();
     }
 }
 
@@ -102,9 +102,26 @@ const reRenderPage = () =>{
         cardBody.appendChild(cardSubject);
         cardBody.appendChild(timeStamp);
         cardContainer.appendChild(cardBody);
+        cardContainer.onclick = ()=>{changeContent(email.id);}
         rowContainer.appendChild(cardContainer);
     });
     
+}
+const findIndex = (query) =>{
+    for(let i=0;i<emails.length;i++){
+        if(emails[i].id==query){
+            return i;
+        }
+    }
+    return -1;
+}
+
+
+const changeContent = (id) =>{
+    let viewer = <HTMLDivElement>document.getElementById("viewer");
+    let index = findIndex(id);
+    console.log(emails[index]);
+    viewer.innerHTML = emails[index].body
 }
 
 /* <div class="card">

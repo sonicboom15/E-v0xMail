@@ -57,8 +57,8 @@ var handleAuthClick = function () {
 };
 var handleAuthResult = function (authResult) {
     if (authResult && !authResult.error) {
-        loadGmailApi();
         removeSignInScreen();
+        loadGmailApi();
     }
 };
 var removeSignInScreen = function () {
@@ -130,8 +130,23 @@ var reRenderPage = function () {
         cardBody.appendChild(cardSubject);
         cardBody.appendChild(timeStamp);
         cardContainer.appendChild(cardBody);
+        cardContainer.onclick = function () { changeContent(email.id); };
         rowContainer.appendChild(cardContainer);
     });
+};
+var findIndex = function (query) {
+    for (var i = 0; i < emails.length; i++) {
+        if (emails[i].id == query) {
+            return i;
+        }
+    }
+    return -1;
+};
+var changeContent = function (id) {
+    var viewer = document.getElementById("viewer");
+    var index = findIndex(id);
+    console.log(emails[index]);
+    viewer.innerHTML = emails[index].body;
 };
 /* <div class="card">
 <div class="card-body">

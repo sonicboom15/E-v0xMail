@@ -14,6 +14,7 @@ body{
 .email-panel{
     background-color: #ffffff;
     border-right: 1px solid #dee2e6;
+    overflow: auto;
 }
 .message-panel{
     background-color: #f1f1f1;
@@ -26,6 +27,11 @@ body{
 }
 .card{
     margin-bottom: 10px;
+    background-color: #f1f1f1;
+}
+.card:hover{
+    background-color: #ffffff;
+    cursor: pointer;
 }
 .hidden{
     display:none;
