@@ -39,15 +39,29 @@ var clientId = '435424937057-ckq50rf8b5dki9o7dim9bgqjf3i5miq4.apps.googleusercon
 var apiKey = 'AIzaSyCkX1JZd7rnzazV0KhOoYz8FKQC1mRn6FM';
 var scopes = 'https://www.googleapis.com/auth/gmail.readonly ' + 'https://www.googleapis.com/auth/gmail.send';
 var emails = [];
+var gapi;
 var Email = /** @class */ (function () {
     function Email() {
     }
     return Email;
 }());
-var handleClientLoad = function () {
-    gapi.client.setApiKey(apiKey);
-    window.setTimeout(checkAuth, 1);
-};
+var handleClientLoad = function () { return __awaiter(_this, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, setKey().then(function () {
+                    checkAuth();
+                })];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}); };
+var setKey = function () { return __awaiter(_this, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        return [2 /*return*/, Promise.resolve(gapi.client.setApiKey(apiKey))];
+    });
+}); };
 var checkAuth = function () {
     gapi.auth.authorize({ client_id: clientId, scope: scopes, immediate: true }, handleAuthResult);
 };
@@ -66,6 +80,13 @@ var removeSignInScreen = function () {
     var signed = document.getElementById("signed");
     signin.classList.add("hidden");
     signed.classList.remove("hidden");
+};
+var logout = function () {
+    gapi.auth.signOut();
+    var signin = document.getElementById("signin");
+    var signed = document.getElementById("signed");
+    signed.classList.add("hidden");
+    signin.classList.remove("hidden");
 };
 var loadGmailApi = function () {
     gapi.client.load('gmail', 'v1', displayBox);

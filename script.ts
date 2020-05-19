@@ -4,6 +4,8 @@ let scopes = 'https://www.googleapis.com/auth/gmail.readonly '+'https://www.goog
 
 let emails = [];
 
+let gapi:any;
+
 class Email{
     id:String;
     From:String;
@@ -17,9 +19,14 @@ class Email{
     keys:Set<String>;
 }
 
-const handleClientLoad = () =>{
-    gapi.client.setApiKey(apiKey);
-    window.setTimeout(checkAuth, 1);
+const handleClientLoad = async () =>{
+    await setKey().then(()=>{
+        checkAuth();
+    });
+}
+
+const setKey = async () =>{
+    return Promise.resolve(gapi.client.setApiKey(apiKey));
 }
 
 const checkAuth = () =>{
@@ -43,6 +50,14 @@ const removeSignInScreen = () =>{
     let signed = <HTMLDivElement>document.getElementById("signed");
     signin.classList.add("hidden");
     signed.classList.remove("hidden");
+}
+
+const logout = () =>{
+    gapi.auth.signOut();
+    let signin = <HTMLDivElement>document.getElementById("signin");
+    let signed = <HTMLDivElement>document.getElementById("signed");
+    signed.classList.add("hidden");
+    signin.classList.remove("hidden");
 }
 
 const loadGmailApi = () =>{
