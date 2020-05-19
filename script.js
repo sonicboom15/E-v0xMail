@@ -58,8 +58,14 @@ var handleAuthClick = function () {
 var handleAuthResult = function (authResult) {
     if (authResult && !authResult.error) {
         loadGmailApi();
-        //removeSignInScreen();
+        removeSignInScreen();
     }
+};
+var removeSignInScreen = function () {
+    var signin = document.getElementById("signin");
+    var signed = document.getElementById("signed");
+    signin.classList.add("hidden");
+    signed.classList.remove("hidden");
 };
 var loadGmailApi = function () {
     gapi.client.load('gmail', 'v1', displayBox);

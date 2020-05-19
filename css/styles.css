@@ -27,3 +27,6 @@ body{
 .card{
     margin-bottom: 10px;
 }
+.hidden{
+    display:none;
+}

@@ -34,8 +34,15 @@ const handleAuthClick = () => {
 const handleAuthResult = (authResult) =>{
     if(authResult && !authResult.error){
         loadGmailApi();
-        //removeSignInScreen();
+        removeSignInScreen();
     }
+}
+
+const removeSignInScreen = () =>{
+    let signin = <HTMLDivElement>document.getElementById("signin");
+    let signed = <HTMLDivElement>document.getElementById("signed");
+    signin.classList.add("hidden");
+    signed.classList.remove("hidden");
 }
 
 const loadGmailApi = () =>{
