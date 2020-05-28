@@ -130,11 +130,7 @@ var addMessage = function (message) {
 var getFiltered = function (query) {
     query = query.toLowerCase();
     var results = [];
-    for (var i = 0; i < emails.length; i++) {
-        if (emails[i].keys.has(query)) {
-            results.push(emails[i]);
-        }
-    }
+    results = emails.filter(function (email) { return email.keys.has(query); });
     return results;
 };
 var getResults = function (element) {
@@ -202,12 +198,9 @@ var reRenderPage = function () {
     });
 };
 var findIndex = function (query) {
-    for (var i = 0; i < emails.length; i++) {
-        if (emails[i].id == query) {
-            return i;
-        }
-    }
-    return -1;
+    var isIndex = function (element) { return element.id == query; };
+    var results = emails.filter(isIndex);
+    return results[0].id;
 };
 var changeContent = function (id) {
     var viewer = document.getElementById("viewer");
@@ -221,16 +214,9 @@ var changeContent = function (id) {
 var getForm = function () {
     var viewer = document.getElementById("viewer");
     viewer.innerHTML = "";
-    var formdata = '<form>\r\n                    <div class=\"form-group\">\r\n                      <input type=\"email\" class=\"form-control\" id=\"toAddress\" placeholder=\"To\" required>\r\n                    <\/div>\r\n                    <div class=\"form-group\">\r\n                      <input type=\"text\" class=\"form-control\" id=\"subject\" placeholder=\"Subject\">\r\n                    <\/div>\r\n                    <div class=\"form-group\">\r\n                        <textarea name=\"body\" class=\"form-control\" id=\"emailbody\" style=\"min-width: 100%;min-height: 70vh;\" placeholder=\"Enter Content\" required><\/textarea>\r\n                    <\/div>\r\n                    <button type=\"submit\" class=\"btn btn-primary\">Send<\/button>\r\n                  <\/form>';
+    var formdata = '<form>\r\n                    <div class=\"form-group\">\r\n                      <input type=\"email\" class=\"form-control\" id=\"toAddress\" placeholder=\"To\" required>\r\n                    <\/div>\r\n                    <div class=\"form-group\">\r\n                      <input type=\"text\" class=\"form-control\" id=\"subject\" placeholder=\"Subject\">\r\n                    <\/div>\r\n                    <div class=\"form-group\">\r\n                        <textarea name=\"body\" class=\"form-control\" id=\"emailbody\" style=\"min-width: 100%;min-height: 70vh;\" placeholder=\"Enter Content\" required><\/textarea>\r\n                    <\/div>\r\n                    <button onclick=\"sendEmail()\" class=\"btn btn-primary\">Send<\/button>\r\n                  <\/form>';
     viewer.innerHTML = formdata;
 };
-/* <div class="card">
-<div class="card-body">
-<div class="card-title">ABC</div>
-<div class="card-text">Some Subject</div>
-<div class="text-muted">Some Time</div>
-</div>
-</div> */
 var getHeader = function (allHeaders, key) {
     var header = "";
     allHeaders.forEach(function (element) {
@@ -270,10 +256,14 @@ var showOutput = function () {
 };
 var sendEmail = function () {
     //Disable the button;
+    console.log("Yay");
     var send = document.getElementById("sendbutton");
-    var body = document.getElementById("emailbody");
-    var Subject = document.getElementById("subject");
-    var To = document.getElementById("toAddress");
+    var bodyElement = document.getElementById("emailbody");
+    var SubjectElement = document.getElementById("subject");
+    var ToElement = document.getElementById("toAddress");
+    var body = bodyElement.value;
+    var Subject = SubjectElement.value;
+    var To = ToElement.value;
     send.disabled = true;
     sendMessage({ To: To, Subject: Subject }, body, showOutput);
     return false;

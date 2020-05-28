@@ -96,11 +96,8 @@ const addMessage = (message) =>{
 const getFiltered = (query) =>{
     query = query.toLowerCase();
     let results = []
-    for(let i=0;i<emails.length;i++){
-        if(emails[i].keys.has(query)){
-            results.push(emails[i]);
-        }
-    }
+
+    results = emails.filter(email => email.keys.has(query))
     return results;
 }
 
@@ -172,12 +169,9 @@ const reRenderPage = () =>{
     
 }
 const findIndex = (query) =>{
-    for(let i=0;i<emails.length;i++){
-        if(emails[i].id==query){
-            return i;
-        }
-    }
-    return -1;
+    const isIndex = (element) => element.id == query;
+    let results = emails.filter(isIndex)
+    return results[0].id;
 }
 
 
@@ -194,17 +188,10 @@ const changeContent = (id) =>{
 const getForm = () =>{
     let viewer = <HTMLDivElement>document.getElementById("viewer");
     viewer.innerHTML = "";
-    let formdata = '<form>\r\n                    <div class=\"form-group\">\r\n                      <input type=\"email\" class=\"form-control\" id=\"toAddress\" placeholder=\"To\" required>\r\n                    <\/div>\r\n                    <div class=\"form-group\">\r\n                      <input type=\"text\" class=\"form-control\" id=\"subject\" placeholder=\"Subject\">\r\n                    <\/div>\r\n                    <div class=\"form-group\">\r\n                        <textarea name=\"body\" class=\"form-control\" id=\"emailbody\" style=\"min-width: 100%;min-height: 70vh;\" placeholder=\"Enter Content\" required><\/textarea>\r\n                    <\/div>\r\n                    <button type=\"submit\" class=\"btn btn-primary\">Send<\/button>\r\n                  <\/form>'
+    let formdata = '<form>\r\n                    <div class=\"form-group\">\r\n                      <input type=\"email\" class=\"form-control\" id=\"toAddress\" placeholder=\"To\" required>\r\n                    <\/div>\r\n                    <div class=\"form-group\">\r\n                      <input type=\"text\" class=\"form-control\" id=\"subject\" placeholder=\"Subject\">\r\n                    <\/div>\r\n                    <div class=\"form-group\">\r\n                        <textarea name=\"body\" class=\"form-control\" id=\"emailbody\" style=\"min-width: 100%;min-height: 70vh;\" placeholder=\"Enter Content\" required><\/textarea>\r\n                    <\/div>\r\n                    <button onclick=\"sendEmail()\" class=\"btn btn-primary\">Send<\/button>\r\n                  <\/form>'
     viewer.innerHTML = formdata;
 }
 
-/* <div class="card">
-<div class="card-body">
-<div class="card-title">ABC</div>
-<div class="card-text">Some Subject</div>
-<div class="text-muted">Some Time</div>
-</div>
-</div> */
 
 const getHeader = (allHeaders, key) => {
     let header = "";
@@ -250,9 +237,12 @@ const sendEmail = () => {
     //Disable the button;
     console.log("Yay");
     let send = <HTMLButtonElement>document.getElementById("sendbutton");
-    let body = <HTMLTextAreaElement>document.getElementById("emailbody");
-    let Subject = <HTMLInputElement>document.getElementById("subject");
-    let To = <HTMLInputElement>document.getElementById("toAddress");
+    let bodyElement = <HTMLTextAreaElement>document.getElementById("emailbody");
+    let SubjectElement = <HTMLInputElement>document.getElementById("subject");
+    let ToElement = <HTMLInputElement>document.getElementById("toAddress");
+    let body = bodyElement.value;
+    let Subject = SubjectElement.value;
+    let To = ToElement.value;
     send.disabled = true;
     sendMessage({To,Subject},body,showOutput);
     return false;
